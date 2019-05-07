@@ -285,6 +285,38 @@ namespace AnimalShelter.Models
 
             }
 
+            public static List<Pet> SortAlpha()
+                {
+                  List<Pet> allPetsAlpha = new List<Pet>{};
+                  MySqlConnection conn = DB.Connection();
+                  conn.Open();
+                  MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+                  cmd.CommandText = @"SELECT * FROM animal ORDER BY name;";
+                  MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+
+                  while (rdr.Read())
+                  {
+                    int petId = rdr.GetInt32(0);
+                    string petName = rdr.GetString(1);
+                    string petSex = rdr.GetString(2);
+                    string petType = rdr.GetString(3);
+                    DateTime petDate = rdr.GetDateTime(4);
+                    string petBreed = rdr.GetString(5);
+                    Pet newPet= new Pet (petName, petSex,petType,petDate,petBreed);
+                    allPetsAlpha.Add(newPet);
+                  }
+
+                  conn.Close();
+
+                  if (conn != null)
+                  {
+                    conn.Dispose();
+                  }
+
+                  return allPetsAlpha ;
+
+                }
+
 
 
             public static List<Pet> FilterType(string userInput)
@@ -319,6 +351,39 @@ namespace AnimalShelter.Models
                     return allPets;
 
                   }
+
+                  public static List<Pet> FilterSex(string userInput)
+                        {
+                          List<Pet> allPetsFilter = new List<Pet>{};
+                          MySqlConnection conn = DB.Connection();
+                          conn.Open();
+                          MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+                          cmd.CommandText = @"SELECT * FROM animal WHERE sex ='" + userInput + "';";
+                          MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+
+                          while (rdr.Read())
+                          {
+
+                            int petId = rdr.GetInt32(0);
+                            string petName = rdr.GetString(1);
+                            string petSex = rdr.GetString(2);
+                            string petType = rdr.GetString(3);
+                            DateTime petDate = rdr.GetDateTime(4);
+                            string petBreed = rdr.GetString(5);
+                            Pet newPet= new Pet (petName,petSex, petType,petDate,petBreed);
+                            allPetsFilter.Add(newPet);
+                          }
+
+                          conn.Close();
+
+                          if (conn != null)
+                          {
+                            conn.Dispose();
+                          }
+
+                          return allPetsFilter;
+
+                        }
 
 
 

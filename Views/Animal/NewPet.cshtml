@@ -3,10 +3,14 @@
 <form action='/pet' method='post'>
   <label for='petName'>Pet name</label>
   <input id='petName' name='petName' type='text'><br>
-  <label for='petSex'>Pet sex</label>
-  <input id='petSex' name='petSex' type='text'><br>
-  <label for='petType'>Pet type</label>
-  <input id='petType' name='petType' type='text'><br>
+  <label for='petSex'>Pet sex</label><br>
+  <input type="radio" name="petSex" value="male"> Male<br>
+  <input type="radio" name="petSex" value="female"> Female<br>
+  <label for='petType'>Pet type</label><br>
+  <input type="radio" name="petType" value="dog"> Dog<br>
+  <input type="radio" name="petType" value="cat"> Cat<br>
+  <input type="radio" name="petType" value="horse"> Horse<br>
+  <input type="radio" name="petType" value="bunny"> Bunny<br>
   <label for='petDate'>Date of admittance</label>
   <input id='petDate' name='petDate' type='date'><br>
   <label for='petBreed'>Pet breed</label>

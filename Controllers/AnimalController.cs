@@ -46,5 +46,19 @@ namespace AnimalShelter.Controllers
                   return View("ListIndex",allFirlteredPets);
                 }
 
+                [HttpPost("/petFilterSex")]
+                      public ActionResult IndexFilterSex(string filtersex)
+                      {
+                        List<Pet> allFirlteredSex= Pet.FilterSex(filtersex);
+                        return View("ListIndex",allFirlteredSex);
+                      }
+
+                      [HttpPost("/sortalpha")]
+                         public ActionResult IndexMyPetAlha()
+                         {
+                           List<Pet> allPetsAlpha = Pet.SortAlpha();
+                           return View("ListIndex",allPetsAlpha);
+                         }
+
 }
 }
