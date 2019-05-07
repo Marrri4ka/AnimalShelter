@@ -16,13 +16,35 @@ namespace AnimalShelter.Controllers
     }
 
     [HttpPost("/pet")]
-    public ActionResult ListIndex(string petName, string petSex, string petType)
+    public ActionResult ListIndex(string petName, string petSex, string petType, DateTime petDate, string petBreed)
     {
-      Pet newPet = new Pet(petName,petSex,petType);
+      Pet newPet = new Pet(petName,petSex,petType,petDate,petBreed);
+      newPet.Save();
       List<Pet> allPets = Pet.GetAll();
       return View(allPets);
     }
 
+    [HttpPost("/sortascending")]
+       public ActionResult IndexPet()
+       {
+         List<Pet> allPetsAscending = Pet.SortAscending();
+         return View("ListIndex",allPetsAscending);
+       }
+
+       [HttpPost("/sortdescending")]
+          public ActionResult IndexMyPet()
+          {
+            List<Pet> allPetsDescending = Pet.SortDescending();
+            return View("ListIndex",allPetsDescending);
+          }
+
+
+          [HttpPost("/petFilterType")]
+                public ActionResult IndexMyType(string filtertype)
+                {
+                  List<Pet> allFirlteredPets= Pet.FilterType(filtertype);
+                  return View("ListIndex",allFirlteredPets);
+                }
 
 }
 }

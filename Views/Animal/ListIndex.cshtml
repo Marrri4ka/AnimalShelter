@@ -12,10 +12,35 @@
   @foreach (Pet pet in Model)
 {
 
-  <li>@pet.GetName()</li>
+  <li><strong>Name:</strong>@pet.GetName()
+  <ol>
+  <strong>Type:</strong>@pet.GetType()
+  <strong>Sex:</strong> @pet.GetSex()
+  <strong>Date of admittance:</strong>@pet.GetDate()
+  <strong>Breed:</strong> @pet.GetBreed()
+</ol>
+ </li>
+
 
 
 
 
 }
 }
+
+  @* <p><a href="/sortascending">Sort date ascending</a></p>
+    <p><a href="/sortdescending">Sort date descending</a></p> *@
+
+<form action="/sortascending" method="post">
+ <button type="submit">Sort date ascending</button>
+</form>
+
+<form action="/sortdescending" method="post">
+ <button type="submit">Sort date descending</button>
+</form>
+
+<form action="/petFilterType" method="post">
+    <label for="filtertype">Filter by type</label>
+    <input id="filtertype" name="filtertype" type="text"> <button id="button" type="submit">Find</button><br>
+
+  </form>

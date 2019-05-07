@@ -10,15 +10,19 @@ namespace AnimalShelter.Models
     private string _sex;
     private string _type;
     private int _id;
+    private DateTime _date;
+    private string _breed;
 
 
 
-    public Pet  (string name, string sex, string type, int id=0) // constructor
+    public Pet  (string name, string sex, string type, DateTime date, string breed,int id=0) // constructor
     {
       _name = name;
       _sex = sex;
       _type = type;
       _id = id;
+      _date = date;
+      _breed = breed;
     }
 
 
@@ -53,6 +57,27 @@ namespace AnimalShelter.Models
       _type = newType;
     }
 
+    public DateTime GetDate()
+    {
+      return _date;
+    }
+
+    public void SetDate(DateTime newDate)
+    {
+      _date = newDate;
+    }
+
+    public string GetBreed()
+    {
+      return _breed;
+    }
+
+    public void SetBreed(string newBreed)
+    {
+      _breed = newBreed;
+    }
+
+
 
 
 
@@ -74,8 +99,10 @@ namespace AnimalShelter.Models
         string petName = rdr.GetString(1);
         string petSex = rdr.GetString(2);
         string petType = rdr.GetString(3);
+        DateTime petDate = rdr.GetDateTime(4);
+        string petBreed = rdr.GetString(5);
 
-        Pet newPet = new Pet (petName ,petSex, petType);
+        Pet newPet = new Pet (petName ,petSex, petType, petDate, petBreed);
         allPets.Add(newPet);
       }
 
@@ -114,20 +141,28 @@ namespace AnimalShelter.Models
       conn.Open();
       var cmd = conn.CreateCommand() as MySqlCommand;
 
-      cmd.CommandText = @"INSERT INTO items (name, sex, type) VALUES (@PetName, @PetSex, @PetType,);";
+      cmd.CommandText = @"INSERT INTO animal (name, sex, type, date, breed) VALUES (@PetName, @PetSex, @PetType, @PetDate, @PetBreed);";
       MySqlParameter name = new MySqlParameter();
       MySqlParameter sex = new MySqlParameter();
       MySqlParameter type = new MySqlParameter();
+      MySqlParameter date = new MySqlParameter();
+      MySqlParameter breed = new MySqlParameter();
       name.ParameterName = "@PetName";
       sex.ParameterName = "@PetSex";
       type.ParameterName = "@PetType";
+      date.ParameterName = "@PetDate";
+      breed.ParameterName = "@PetBreed";
       name.Value = this._name;
       sex.Value = this._sex;
       type.Value = this._type;
+      date.Value = this._date;
+      breed.Value = this._breed;
 
       cmd.Parameters.Add(name);
       cmd.Parameters.Add(sex);
       cmd.Parameters.Add(type);
+      cmd.Parameters.Add(date);
+      cmd.Parameters.Add(breed);
       cmd.ExecuteNonQuery();
 
       _id = (int) cmd.LastInsertedId;
@@ -161,6 +196,8 @@ namespace AnimalShelter.Models
     string petName ="";
     string petSex ="";
     string petType ="";
+    DateTime petDate = new DateTime();
+    string petBreed = "";
 
 
     while(rdr.Read())
@@ -169,8 +206,11 @@ namespace AnimalShelter.Models
       petName = rdr.GetString(1);
       petSex = rdr.GetString(2);
       petType= rdr.GetString(3);
+      petDate = rdr.GetDateTime(4);
+      petBreed = rdr.GetString(5);
+
     }
-    Pet foundPet = new Pet (petName,petSex, petType);
+    Pet foundPet = new Pet (petName,petSex, petType,  petDate,petBreed );
 
     conn.Close();
     if(conn != null)
@@ -179,6 +219,107 @@ namespace AnimalShelter.Models
     }
     return foundPet;
     }
+
+
+    public static List<Pet> SortAscending()
+        {
+          List<Pet> allPetsAscending = new List<Pet>{};
+          MySqlConnection conn = DB.Connection();
+          conn.Open();
+          MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+          cmd.CommandText = @"SELECT * FROM animal ORDER by date ASC;";
+          MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+
+          while (rdr.Read())
+          {
+            int petId = rdr.GetInt32(0);
+            string petName = rdr.GetString(1);
+            string petSex = rdr.GetString(2);
+            string petType = rdr.GetString(3);
+            DateTime petDate = rdr.GetDateTime(4);
+            string petBreed = rdr.GetString(5);
+            Pet newPet= new Pet (petName, petSex,petType,petDate,petBreed);
+            allPetsAscending.Add(newPet);
+          }
+
+          conn.Close();
+
+          if (conn != null)
+          {
+            conn.Dispose();
+          }
+
+          return allPetsAscending ;
+
+        }
+
+        public static List<Pet> SortDescending()
+            {
+              List<Pet> allPetsDescending = new List<Pet>{};
+              MySqlConnection conn = DB.Connection();
+              conn.Open();
+              MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+              cmd.CommandText = @"SELECT * FROM animal ORDER by date ASC;";
+              MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+
+              while (rdr.Read())
+              {
+                int petId = rdr.GetInt32(0);
+                string petName = rdr.GetString(1);
+                string petSex = rdr.GetString(2);
+                string petType = rdr.GetString(3);
+                DateTime petDate = rdr.GetDateTime(4);
+                string petBreed = rdr.GetString(5);
+                Pet newPet= new Pet (petName, petSex,petType,petDate,petBreed);
+                allPetsDescending.Add(newPet);
+              }
+
+              conn.Close();
+
+              if (conn != null)
+              {
+                conn.Dispose();
+              }
+
+              return allPetsDescending ;
+
+            }
+
+
+
+            public static List<Pet> FilterType(string userInput)
+                  {
+                    List<Pet> allPets = new List<Pet>{};
+                    MySqlConnection conn = DB.Connection();
+                    conn.Open();
+                    MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+                    cmd.CommandText = @"SELECT * FROM animal WHERE type ='" + userInput + "';";
+                    MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+
+                    while (rdr.Read())
+                    {
+
+                      int petId = rdr.GetInt32(0);
+                      string petName = rdr.GetString(1);
+                      string petSex = rdr.GetString(2);
+                      string petType = rdr.GetString(3);
+                      DateTime petDate = rdr.GetDateTime(4);
+                      string petBreed = rdr.GetString(5);
+                      Pet newPet= new Pet (petName,petSex, petType,petDate,petBreed);
+                      allPets.Add(newPet);
+                    }
+
+                    conn.Close();
+
+                    if (conn != null)
+                    {
+                      conn.Dispose();
+                    }
+
+                    return allPets;
+
+                  }
+
 
 
 
