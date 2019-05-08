@@ -2,25 +2,53 @@
 
 
 
-
-
-
+<html>
+<head>
 <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
 
-<form action='/pet' method='post'>
-  <label for='petName'>Pet name</label>
-  <input id='petName' name='petName' type='text'><br>
-  <label for='petSex'>Pet sex</label><br>
-  <input type="radio" name="petSex" value="male"> Male<br>
-  <input type="radio" name="petSex" value="female"> Female<br>
-  <label for='petType'>Pet type</label><br>
-  <input type="radio" name="petType" value="dog"> Dog<br>
-  <input type="radio" name="petType" value="cat"> Cat<br>
-  <input type="radio" name="petType" value="horse"> Horse<br>
-  <input type="radio" name="petType" value="bunny"> Bunny<br>
-  <label for='petDate'>Date of admittance</label>
-  <input id='petDate' name='petDate' type='date'><br>
-  <label for='petBreed'>Pet breed</label>
-  <input id='petBreed' name='petBreed' type='text'><br>
-  <button type='submit'>Add pet</button>
-</form>
+<link rel='stylesheet' href='~/css/styles.css'>
+</head>
+<body>
+<div class = "jumbotron">
+
+<center><div class="card" style="width: 18rem;">
+  <div class="card-header">
+    Pet information
+  </div>
+  <form action='/pet' method='post'>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item"><label for='petName'>Pet name</label>
+    <input id='petName' name='petName' type='text'><br></li>
+
+    <li class="list-group-item">  <label for='petSex'>Pet sex</label><br>
+
+
+
+      <input type="radio" name="petSex" value="male"> Male<br>
+      <input type="radio" name="petSex" value="female"> Female<br></li>
+    <li class="list-group-item"><label for='petType'>Pet type</label><br>
+    <input type="radio" name="petType" value="dog"> Dog<br>
+    <input type="radio" name="petType" value="cat"> Cat<br>
+    <input type="radio" name="petType" value="horse"> Horse<br>
+    <input type="radio" name="petType" value="bunny"> Bunny<br></li>
+      <li class="list-group-item">  <label for='petDate'>Date of admittance</label>
+        <input id='petDate' name='petDate' type='date'><br></li>
+        <li class="list-group-item">  <label for='petBreed'>Pet breed</label>
+          <input id='petBreed' name='petBreed' type='text'><br></li>
+        <li class="list-group-item">  <button type='submit'>Add pet</button></li>
+  </ul>
+  </form>
+</div>
+</center>
+
+
+
+
+
+
+
+
+
+</div>
+</body>
+</html>
