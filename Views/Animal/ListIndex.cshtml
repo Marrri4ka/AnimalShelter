@@ -1,63 +1,82 @@
 
 @using AnimalShelter.Models;
-<h1>List of pets</h1>
-<ul>
-
-@if (Model.Count == 0)
-{
-  <p>You have no pets in your  list!</p>
-}
-@if(@Model.Count != 0)
-{
-  @foreach (Pet pet in Model)
-{
-
-  <li><strong>Name:</strong>@pet.GetName()
-  <ol>
-  <strong>Type:</strong>@pet.GetType()
-  <strong>Sex:</strong> @pet.GetSex()
-  <strong>Date of admittance:</strong>@pet.GetDate()
-  <strong>Breed:</strong> @pet.GetBreed()
-</ol>
- </li>
+<center><h1>List of pets</h1></center>
 
 
 
-
-
-}
-}
-
-  @* <p><a href="/sortascending">Sort date ascending</a></p>
-    <p><a href="/sortdescending">Sort date descending</a></p> *@
-
-<form action="/sortascending" method="post">
- <button type="submit">Sort date ascending</button>
-</form>
-
-<form action="/sortdescending" method="post">
- <button type="submit">Sort date descending</button>
-</form>
-
-<form action="/petFilterType" method="post">
-    <label for="filtertype">Filter by type</label>
-    <input id="filtertype" name="filtertype" type="text"> <button id="button" type="submit">Find</button><br>
-
+  <html>
+  <head>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
+  <link rel="stylesheet" type="text/css" href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/compiled-4.8.0.min.css">
+  <link rel='stylesheet' href='~/css/styles.css'>
+  </head>
+  <body>
+  <div class = "jumbotron">
+  <ul class="nav justify-content-end">
+  <li class="nav-item">
+  <form action="/sortascending" method="post">
+   <button class ="btn btn-info"type="submit">Sort date ascending</button>
   </form>
-
-
-  <form action="/petFilterSex" method="post">
-      <label for="filtersex">Filter by sex</label>
-      <input id="filtersex" name="filtersex" type="text"> <button id="button" type="submit">Find</button><br>
-
+  </li>
+  <li class="nav-item">
+  <form action="/sortdescending" method="post">
+   <button class ="btn btn-info" type="submit">Sort date descending</button>
+  </form>
+  </li>
+<li class="nav-item">
+  <form action="/sortalpha" method="post">
+     <button class ="btn btn-info" type="submit">Sort alpha</button>
     </form>
+    </li>
+    <li class="nav-item">
+    <form action="/petFilterSex" method="post">
+          <label for="filtersex">Filter by sex</label>
+          <input id="filtersex" name="filtersex" type="text"> <button class="btn btn-danger" id="button" type="submit">Find</button><br>
+
+        </form>
+    </li>
+    <li class="nav-item">
+    <form action="/petFilterType" method="post">
+        <label for="filtertype">Filter by type</label>
+        <input id="filtertype" name="filtertype" type="text"> <button class="btn btn-danger" id="button" type="submit">Find</button><br>
+
+      </form>
+    </li>
 
 
 
-    <form action="/sortalpa" method="post">
-     <button type="submit">Sort alpha</button>
-    </form>
-  <p><a href="/sortdescending">Sort date descending</a></p>
+</ul>
+
+  <center><div class="card" style="width: 18rem;">
+    <div class="card-body">
+    @if (Model.Count == 0)
+    {
+      <p>You have no pets in your  list!</p>
+    }
+    @if(@Model.Count != 0)
+    {
+      @foreach (Pet pet in Model)
+    {
 
 
-  
+      <h5 class="card-title"><strong>Name:</strong>@pet.GetName()</h5>
+      <p class="card-text">  <strong>Type:</strong>@pet.GetType()
+        <strong>Sex:</strong> @pet.GetSex()
+        <strong>Date of admittance:</strong>@pet.GetDate()
+        <strong>Breed:</strong> @pet.GetBreed()
+.</p>
+
+    }
+    }
+
+    <div class="card-body">
+
+
+
+
+    </div>
+  </div>
+  </center>
+  </div>
+  </body>
+  </html>
